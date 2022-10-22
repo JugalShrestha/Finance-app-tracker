@@ -24,6 +24,21 @@ User case:
     -If again a data is to be added:
         -Must be able to keep previous record with the addition of new records.
     -End.
+    Design:
+    -Add the Year: 2079
+     Add the month: Baishakh
+     Add the date: 1
+     Add the amount of products:3
+     Product no.1 name: Samsung
+     Price of Samsung: Rs. 2345.00
+     Product no.3 name: Apple
+     Price of Apple: Rs. 1900.00
+     Are you done?
+     If yes: goes to menu;
+     If no: 
+     Add the amount of products:1
+     ...
+     Repeat and exit;
 
     case: Viewing all the records
     Actor: User
@@ -31,4 +46,15 @@ User case:
     -Must be able to interact with menu system.
     -Must be able to go to "View data" section and input data.
     -Must be able to understand all the columns and rows of the information.
-    -Must be able to see what the total expense was at the exact month of the year.     
+    -Must be able to see what the total expense was at the exact month of the year.
+    -Must be able to exit to the menu again.
+    Design:
+    -  Baisakh Jesth Asoj...
+        Choose a month: Baisakh "User Input"
+    -"CLS"
+        Month Jestha:
+        Day 1: Expenses;
+        ..Day 31:Expenses;
+        Total:....;
+
+        Exit?
