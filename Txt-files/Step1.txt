@@ -1,0 +1,34 @@
+Making of Finance Tracker.
+
+Step 1: 
+    Functionality:
+    -Menu
+        Record list,
+        Add data,
+        Delete data,
+        Update data,
+        Search data,
+    -Login If needed
+    -File handling
+
+User case:
+    case: Adding a data 
+    Actor: User
+    Scenario:
+    -Must be able to interact with menu system.
+    -Must be able to go to "add data" section and input data.
+    -Must be able to put in the month and the day with respective to the year.
+    -Must be able to put in the Products and its pricing.
+    -Must be able to save those things in a file.
+    -Must be able to exit to the menu again.
+    -If again a data is to be added:
+        -Must be able to keep previous record with the addition of new records.
+    -End.
+
+    case: Viewing all the records
+    Actor: User
+    Scenario:
+    -Must be able to interact with menu system.
+    -Must be able to go to "View data" section and input data.
+    -Must be able to understand all the columns and rows of the information.
+    -Must be able to see what the total expense was at the exact month of the year.     
