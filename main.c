@@ -14,7 +14,7 @@ int main()
         lineBreak();
         printf("\t\tMENU");
         lineBreak();
-        printf("\n1. Display Records");
+        printf("\n1. Display Total Expenses");
         printf("\n2. Add Records");
         printf("\n3. Update a Record");
         printf("\n4. Search a Record");
