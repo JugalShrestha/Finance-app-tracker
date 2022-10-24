@@ -5,19 +5,20 @@ void choiceForMenu(char opt[2])
 {
     //options from the menu section
     char opt1[2]= "1",opt2[2]="2",opt3[2]="3",opt4[2]="4",opt5[2]="5",opt0[2]="0";
-    void displayData();
     void addData();
-
+    void displayData();
     if(strcmp(opt,opt1)==0)
     {
         system("cls");
         displayData();
+        printf("\n");
         system("pause");
     }
     else if(strcmp(opt,opt2)==0)
     {
         system("cls");
         addData();
+        printf("\n");
         system("pause");
     }
     else if(strcmp(opt,opt3)==0)

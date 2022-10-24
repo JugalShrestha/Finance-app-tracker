@@ -2,8 +2,7 @@
 #include<string.h>
 #include"decoration.h"
 #include"selectionForMenu.h"
-#include"displayRecord.h"
-#include"addRecord.h"
+#include"records.h"
 int main()
 {
     //Menu System:
