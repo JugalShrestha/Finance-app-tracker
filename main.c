@@ -10,18 +10,19 @@ int main()
     char option[2];
     do{
         system("cls");
-        lineBreak();
-        printf("\t\tMENU");
-        lineBreak();
-        printf("\n1. Display Total Expenses");
-        printf("\n2. Add Records");
-        printf("\n3. Update a Record");
-        printf("\n4. Search a Record");
-        printf("\n5. Delete a Record");
-        printf("\n0. Exit");
-        lineBreak();
-        printf("\nEnter your choice (0-5):\t");
+        sectionBreak();
+        printf("\t\t\t\tMENU");
+        sectionBreak();
+        printf("\n\t1. Display Total Expenses");
+        printf("\n\t2. Add a Record");
+        printf("\n\t3. Update a Record");
+        printf("\n\t4. Search a Record");
+        printf("\n\t5. Delete a Record");
+        printf("\n\t0. Exit");
+        sectionBreak();
+        printf("\n\tEnter your choice (0-5):\t");
         scanf("%s",option);
+        sectionBreak();
         choiceForMenu(option);
         system("cls");
     }

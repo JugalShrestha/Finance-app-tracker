@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-
+#define balance 400000
 //Structure for product
 struct productData{
     char productName[20];
@@ -15,24 +15,26 @@ struct database{
     char date[30];
     float totalPrice;
     int maxProduct;
-    float balance;
     struct productData pData[50];
 };
 void lineBreak();
+void sectionBreak();
 
 //Adding data
 void addData(){
     int count;
     int maxCount;
-    int one=1;
     struct database data;
+    //Showing Today's date
+    sectionBreak();
+    printf("\tTodays date: \t%s",__DATE__);
     //Getting date
-    lineBreak();
-    printf("Enter the year(2022,etc): ");
+    sectionBreak();
+    printf("\tEnter the year(2022,etc): ");
     scanf("%s",data.year);
-    printf("Enter the month(Aug,etc): ");
+    printf("\tEnter the month(August,etc): ");
     scanf("%s",data.month);
-    printf("Enter the day(11,etc): ");
+    printf("\tEnter the day(11,etc): ");
     scanf("%s",data.day);
     lineBreak();
     //Date maker
@@ -43,17 +45,17 @@ void addData(){
     strcat(data.date,"/");
     strcat(data.date,data.day);
     //printf("%s",data.date);
-    printf("Enter the estimated no. of products(2,etc): ");
+    printf("\tEnter the estimated no. of products(2,etc): ");
     scanf("%d",&data.maxProduct);
     lineBreak();
     data.totalPrice=0;
     for(count=0;count<data.maxProduct;count++)
     {
-        printf("Enter the name of product no. %d : ",count+1);
+        printf("\tEnter the name of product no. %d : ",count+1);
         fflush(stdin);
         scanf("%[^\n]",data.pData[count].productName);
         fflush(stdin);
-        printf("Enter the price for %s : ",data.pData[count].productName);
+        printf("\tEnter the price for %s : Rs. ",data.pData[count].productName);
         scanf("%f",&data.pData[count].productPrice);
         fflush(stdin);
         data.totalPrice+=data.pData[count].productPrice;
@@ -74,25 +76,172 @@ void displayData(){
 	struct database data;
     int count=0;
     float total=0;
-    data.balance= 400000;
-    lineBreak();
-    printf("\n\tDISPLAYING TOTAL EXPENSES");
-    lineBreak();
+    sectionBreak();
+    printf("\t\tDISPLAYING TOTAL EXPENSES");
+    sectionBreak();
     while(fread(&data,sizeof(struct database),1,mainFile))
     {
         lineBreak();
-        printf("DATE: \t%s",data.date);
+        char d[6]="DATE:";
+        printf("\t%s \t%s",d,data.date);
         lineBreak();
-        printf("TOTAL: \tRs. %.2f",data.totalPrice);
+        char t[7]="TOTAL:";
+        printf("\t%-25s \tRs. %.2f",t,data.totalPrice);
         lineBreak();
-        data.balance-=data.totalPrice;
         total+=data.totalPrice;
     }
     printf("\n\n");
+    sectionBreak();
+    printf("\tTotal Expense (%s): \tRs. %.2f",__DATE__,total);
     lineBreak();
-    printf("TOTAL EXPENSE: \tRs. %.2f",total);
+    char b[9]="BALANCE:";
+    printf("\t%-25s\tRs. %.2f",b,balance-total);
+    sectionBreak();
+    fclose(mainFile);
+}
+
+//Updating A Record:
+void updateData(){
+    char toBeUpdate[20];
+    char yearToUpdate[5],monthToUpdate[20],dayToUpdate[3];
+    sectionBreak();
+    printf("\t\t\tUPDATING FOR A DATE");
+    sectionBreak();
+    printf("\tTODAY'S DATE: %s",__DATE__);
+    sectionBreak();
     lineBreak();
-    printf("BALANCE: \tRs. %.2f",data.balance);
+    printf("\tYear to be searched (2022,etc): ");
+    scanf("%s",yearToUpdate);
+    printf("\tMonth to be searched (August,etc): ");
+    scanf("%s",monthToUpdate);
+    printf("\tDay to be searched (11,etc): ");
+    scanf("%s",dayToUpdate);
+    //Date maker
+    strupr(monthToUpdate);
+    strcpy(toBeUpdate,yearToUpdate);
+    strcat(toBeUpdate,"/");
+    strcat(toBeUpdate,monthToUpdate);
+    strcat(toBeUpdate,"/");
+    strcat(toBeUpdate,dayToUpdate);
+    //printf("\t%s",toBeUpdate);
+
+    
+    FILE *mainFile,*updateFile;
+    int dataCounter=0;
+    int counter=0;
+    mainFile= fopen("database.txt","r");
+    updateFile= fopen("updatedDatabase.txt","w");
+    struct database data;
+    while(fread(&data,sizeof(struct database),1,mainFile))
+    {
+        //After date is found menu
+        if(strcmp(data.date,toBeUpdate)==0)
+        {
+            dataCounter=1;
+            system("CLS");
+            sectionBreak();
+            printf("\tUPDATING FOR (%s)",toBeUpdate);
+            sectionBreak();
+            printf("\tPrevious Expense: \tRs. %.2f",data.totalPrice);
+            sectionBreak();
+            printf("\tAdd the Estimated No. of new products (2,etc): ");
+            scanf("%d",&data.maxProduct);
+            lineBreak();
+            for(counter=0;counter<data.maxProduct;counter++)
+            {        
+                printf("\tEnter the name of product no. %d : ",counter+1);
+                fflush(stdin);
+                scanf("%[^\n]",data.pData[counter].productName);
+                fflush(stdin);
+                printf("\tEnter the price for %s : ",data.pData[counter].productName);
+                scanf("%f",&data.pData[counter].productPrice);
+                fflush(stdin);
+                data.totalPrice+=data.pData[counter].productPrice;
+                lineBreak();
+            }
+            printf("\t\nNew Expense: %.2f",data.totalPrice);
+            lineBreak();
+
+            fwrite(&data,sizeof(struct database),1,updateFile);
+        }
+    }
+    fclose(mainFile);
+    fclose(updateFile);
+
+    if(dataCounter==1)
+    {
+        //For Updating the data
+        mainFile=fopen("database.txt","a+");
+        updateFile=fopen("updatedDatabase.txt","r");
+        while(fread(&data,sizeof(struct database),1,updateFile))
+        {
+            fwrite(&data,sizeof(struct database),1,mainFile);
+        }
+        fclose(mainFile);
+        fclose(updateFile);
+    }
+    else{
+        lineBreak();
+        printf("\tRecord NOT Found!");
+        lineBreak();
+    }
+}
+
+//Searching a record
+void searchData(){
+    char toBeSearched[20];
+    char yearToSearch[5],monthToSearch[20],dayToSearch[3];
+    sectionBreak();
+    printf("\t\t\tSEARCHING A DATE");
+    sectionBreak();
+    printf("\tTODAY'S DATE: %s",__DATE__);
+    sectionBreak();
     lineBreak();
+    printf("\tYear to be searched (2022,etc): ");
+    scanf("%s",yearToSearch);
+    printf("\tMonth to be searched (August,etc): ");
+    scanf("%s",monthToSearch);
+    printf("\tDay to be searched (11,etc): ");
+    scanf("%s",dayToSearch);
+    //Date maker
+    strupr(monthToSearch);
+    strcpy(toBeSearched,yearToSearch);
+    strcat(toBeSearched,"/");
+    strcat(toBeSearched,monthToSearch);
+    strcat(toBeSearched,"/");
+    strcat(toBeSearched,dayToSearch);
+    //printf("\t%s",toBeSearched);
+
+    FILE *mainFile;
+    int dataCounter=0;
+    int counter=0;
+    mainFile= fopen("database.txt","r");
+    struct database data;
+    while(fread(&data,sizeof(struct database),1,mainFile))
+    {
+        //After date is found
+        if(strcmp(data.date,toBeSearched)==0)
+        {
+            system("cls");
+            dataCounter=1;
+            sectionBreak();
+            printf("\tDATE: \t%s",data.date);
+            sectionBreak();
+            for(counter=0;counter<data.maxProduct;counter++)
+            {
+                printf("\t%-25s \tRs. %.2f\n",data.pData[counter].productName,data.pData[counter].productPrice);
+            }
+            char t[7]="TOTAL:";
+            lineBreak();
+            printf("\t%-24s \tRs.%.2f",t,data.totalPrice);
+            lineBreak();
+        }
+    }
+    if(dataCounter!=1)
+    {
+        lineBreak();
+        printf("\tRecord NOT Found!");
+        lineBreak();
+    }
     fclose(mainFile);
 }
