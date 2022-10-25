@@ -161,7 +161,7 @@ void updateData(){
                 lineBreak();
             }
             data.maxProduct=data.maxProduct2+data.maxProduct;
-            printf("\n\tNew Expense: %.2f",data.totalPrice);
+            printf("\n\tNew Expense: Rs.%.2f",data.totalPrice);
             lineBreak();
         }
         fwrite(&data,sizeof(struct database),1,updateFile);
