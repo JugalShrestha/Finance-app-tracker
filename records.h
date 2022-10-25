@@ -154,15 +154,13 @@ void updateData(){
                 fflush(stdin);
                 scanf("%[^\n]",data.pData[counter].productName);
                 fflush(stdin);
-                printf("\tEnter the price for %s : ",data.pData[counter].productName);
+                printf("\tEnter the price for %s : Rs.",data.pData[counter].productName);
                 scanf("%f",&data.pData[counter].productPrice);
                 fflush(stdin);
                 data.totalPrice+=data.pData[counter].productPrice;
                 lineBreak();
             }
             data.maxProduct=data.maxProduct2+data.maxProduct;
-            printf("\n\t1. %d",data.maxProduct);
-            printf("\n\t2. %d",data.maxProduct2);
             printf("\n\tNew Expense: %.2f",data.totalPrice);
             lineBreak();
         }
