@@ -9,6 +9,7 @@ void choiceForMenu(char opt[2])
     void displayData();
     void updateData();
     void searchData();
+    void deleteData();
     //DISPLAY DATA
     if(strcmp(opt,opt1)==0)
     {
@@ -44,8 +45,10 @@ void choiceForMenu(char opt[2])
     //DELETE DATA
     else if(strcmp(opt,opt5)==0)
     {
-        printf("\ndelete data section");
-        //deleteData();
+        system("cls");
+        deleteData();
+        printf("\n\t");
+        system("pause");
     }
     //EXIT
     else if(strcmp(opt,opt0)==0)

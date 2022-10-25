@@ -159,11 +159,10 @@ void updateData(){
                 data.totalPrice+=data.pData[counter].productPrice;
                 lineBreak();
             }
-            printf("\t\nNew Expense: %.2f",data.totalPrice);
+            printf("\n\tNew Expense: %.2f",data.totalPrice);
             lineBreak();
-
-            fwrite(&data,sizeof(struct database),1,updateFile);
         }
+        fwrite(&data,sizeof(struct database),1,updateFile);
     }
     fclose(mainFile);
     fclose(updateFile);
@@ -171,7 +170,7 @@ void updateData(){
     if(dataCounter==1)
     {
         //For Updating the data
-        mainFile=fopen("database.txt","a+");
+        mainFile=fopen("database.txt","w");
         updateFile=fopen("updatedDatabase.txt","r");
         while(fread(&data,sizeof(struct database),1,updateFile))
         {
@@ -244,4 +243,71 @@ void searchData(){
         lineBreak();
     }
     fclose(mainFile);
+}
+
+//Deleting the data
+void deleteData(){
+    char toBeDeleted[20];
+    char yearToDelete[5],monthToDelete[20],dayToDelete[3];
+    sectionBreak();
+    printf("\t\t\tDELETING A RECORD");
+    sectionBreak();
+    printf("\tTODAY'S DATE: %s",__DATE__);
+    sectionBreak();
+    lineBreak();
+    printf("\tYear to be deleted (2022,etc): ");
+    scanf("%s",yearToDelete);
+    printf("\tMonth to be deleted (August,etc): ");
+    scanf("%s",monthToDelete);
+    printf("\tDay to be deleted (11,etc): ");
+    scanf("%s",dayToDelete);
+    //Date maker
+    strupr(monthToDelete);
+    strcpy(toBeDeleted,yearToDelete);
+    strcat(toBeDeleted,"/");
+    strcat(toBeDeleted,monthToDelete);
+    strcat(toBeDeleted,"/");
+    strcat(toBeDeleted,dayToDelete);
+    //printf("\t%s",toBeDeleted);
+
+    //READING IN FILE
+    FILE *mainFile,*deleteFile;
+    int dataCounter=0;
+    int counter=0;
+    mainFile= fopen("database.txt","r");
+    deleteFile= fopen("updatedDatabase.txt","w");
+    struct database data;
+    while(fread(&data,sizeof(struct database),1,mainFile))
+    {
+        //After date is found
+        if(strcmp(data.date,toBeDeleted)==0)
+        {
+            dataCounter=1;
+        }
+        else
+        fwrite(&data,sizeof(struct database),1,deleteFile);
+    }
+    fclose(mainFile);
+    fclose(deleteFile);
+    if(dataCounter==1)
+    {
+        mainFile= fopen("database.txt","w");
+        deleteFile= fopen("updatedDatabase.txt","r");
+        while(fread(&data,sizeof(struct database),1,deleteFile))
+        {
+            fwrite(&data,sizeof(struct database),1,mainFile);
+        }
+        fclose(mainFile);
+        fclose(deleteFile);
+        sectionBreak();
+        printf("\tRecord Deleted!");
+        sectionBreak();
+
+    }
+    else{
+        lineBreak();
+        printf("\tRecord NOT Found!");
+        lineBreak();
+    }
+    
 }
