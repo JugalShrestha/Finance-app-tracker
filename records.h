@@ -15,6 +15,7 @@ struct database{
     char date[30];
     float totalPrice;
     int maxProduct;
+    int maxProduct2;
     struct productData pData[50];
 };
 void lineBreak();
@@ -145,9 +146,9 @@ void updateData(){
             printf("\tPrevious Expense: \tRs. %.2f",data.totalPrice);
             sectionBreak();
             printf("\tAdd the Estimated No. of new products (2,etc): ");
-            scanf("%d",&data.maxProduct);
+            scanf("%d",&data.maxProduct2);
             lineBreak();
-            for(counter=0;counter<data.maxProduct;counter++)
+            for(counter=(data.maxProduct);counter<(data.maxProduct+data.maxProduct2);counter++)
             {        
                 printf("\tEnter the name of product no. %d : ",counter+1);
                 fflush(stdin);
@@ -159,6 +160,9 @@ void updateData(){
                 data.totalPrice+=data.pData[counter].productPrice;
                 lineBreak();
             }
+            data.maxProduct=data.maxProduct2+data.maxProduct;
+            printf("\n\t1. %d",data.maxProduct);
+            printf("\n\t2. %d",data.maxProduct2);
             printf("\n\tNew Expense: %.2f",data.totalPrice);
             lineBreak();
         }
